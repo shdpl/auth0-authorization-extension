@@ -1,6 +1,6 @@
 {
   "title": "Auth0 Authorization",
-  "name": "auth0-authz",
+  "name": "lwy-auth0-authz",
   "version": "2.4.7",
   "author": "auth0",
   "description": "This extension gives Auth0 customers the possibility to manage group memberships for their users.",

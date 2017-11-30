@@ -31,15 +31,20 @@ function (user, context, callback) {
     }
 
     // Update the user object.<% if (config.groupsInToken && !config.groupsPassthrough) { %>
-    user.groups = data.groups;<% } %><% if (config.groupsInToken && config.groupsPassthrough) { %>
-    user.groups = mergeRecords(user.groups, data.groups);<% } %><% if (config.rolesInToken && !config.rolesPassthrough) { %>
-    user.roles = data.roles;<% } %><% if (config.rolesInToken && config.rolesPassthrough) { %>
-    user.roles = mergeRecords(user.roles, data.roles);<% } %><% if (config.permissionsInToken && !config.permissionsPassthrough) { %>
-    user.permissions = data.permissions;<% } %><% if (config.permissionsInToken && config.permissionsPassthrough) { %>
-    user.permissions = mergeRecords(user.permissions, data.permissions);<% } %>
+    user.groups = (typeof data.groups !== 'string') ? data.groups : [data.groups];<% } %><% if (config.groupsInToken && config.groupsPassthrough) { %>
+    user.groups = mergeRecords(user.groups, (typeof data.groups !== 'string') ? data.groups : [data.groups]);<% } %><% if (config.rolesInToken && !config.rolesPassthrough) { %>
+    user.roles = (typeof data.roles !== 'string') ? data.roles : [data.roles];<% } %><% if (config.rolesInToken && config.rolesPassthrough) { %>
+    user.roles = mergeRecords(user.roles, (typeof data.roles !== 'string') ? data.roles : [data.roles]);<% } %><% if (config.permissionsInToken && !config.permissionsPassthrough) { %>
+    user.permissions = (typeof data.permissions !== 'string') ? data.permissions : [data.permissions];<% } %><% if (config.permissionsInToken && config.permissionsPassthrough) { %>
+    user.permissions = mergeRecords(user.permissions, (typeof data.permissions !== 'string') ? data.permissions : [data.permissions]);<% } %>
 <% if (config.persistGroups || config.persistRoles || config.persistPermissions) { %>
     // Store this in the user profile (app_metadata).
-    saveToMetadata(user, data.groups, data.roles, data.permissions, function(err) {
+    saveToMetadata(
+			user,
+			(typeof data.groups !== 'string') ? data.groups : [data.groups],
+			(typeof data.roles !== 'string') ? data.roles : [data.roles],
+			(typeof data.permissions !== 'string') ? data.permissions : [data.permissions],
+			function(err) {
       return callback(err, user, context);
     });
 <% } else { %>
