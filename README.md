@@ -1,5 +1,8 @@
 # Auth0 Authorization Extension
 
+## Building
+docker run -v "$PWD":/usr/src/app -w /usr/src/app node:alpine sh -c 'npm install && npm run build'
+
 ## Running in Production
 
 ```bash
